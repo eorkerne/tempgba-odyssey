@@ -39,11 +39,10 @@ TARGET = TempGBA
 VPATH = src src/zlib
 
 CFLAGS = \
- -O3 -G0 \
+ -O2 -G0 \
  -march=allegrex -mfp32 -mgp32 -mlong32 -mabi=eabi \
  -fomit-frame-pointer -fstrict-aliasing \
  -falign-functions=32 -falign-loops -falign-labels -falign-jumps \
- -finline-functions -funroll-loops \
  -Wall -Wundef -Wpointer-arith -Wbad-function-cast -Wwrite-strings -Wmissing-prototypes -Wsign-compare \
  -fcommon -Wno-error -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=int-conversion \
  -DZLIB_CONST
