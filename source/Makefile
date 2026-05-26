@@ -41,6 +41,7 @@ VPATH = src src/zlib
 CFLAGS = \
  -O2 -G0 \
  -march=allegrex -mfp32 -mgp32 -mlong32 -mabi=eabi \
+ -mno-synci -mflush-func=_flush_cache \
  -fomit-frame-pointer -fstrict-aliasing \
  -falign-functions=32 -falign-loops -falign-labels -falign-jumps \
  -Wall -Wundef -Wpointer-arith -Wbad-function-cast -Wwrite-strings -Wmissing-prototypes -Wsign-compare \
