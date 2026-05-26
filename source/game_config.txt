@@ -1,0 +1,98 @@
+# TempGBA4PSP - game_config.txt
+#
+# Format:
+#   game_name = <12-char title from ROM header at 0xA0>
+#   game_code = <4-char code from ROM header at 0xAC>
+#   vender_code = <2-char maker code from ROM header at 0xB0>
+#   <option> = <value>
+#   ...
+#   (blank line or next game_name ends the section)
+#
+# Available options:
+#   save_type = sram | flash | flash64 | flash128 | eeprom
+#   flash_rom_type = 128KB
+#   iwram_stack_optimize = no
+#   idle_loop_eliminate_target = <hex address>
+#   bios_rom_hack_39 = yes
+#   bios_rom_hack_2C = yes
+#
+# save_type values:
+#   sram     - 32KB SRAM (most ROM hacks)
+#   flash    - 64KB Flash (alias: flash64)
+#   flash128 - 128KB Flash (Pokemon FireRed/Emerald/Ruby hacks)
+#   eeprom   - 512B or 8KB EEPROM (Pokemon GS/Crystal hacks based on GBC ports)
+#
+# HOW TO FIND YOUR ROM INFO:
+#   Use a hex editor and look at offset 0xA0 (title, 12 chars),
+#   0xAC (game code, 4 chars), 0xB0 (maker code, 2 chars).
+#   Many ROM hack tools show this info directly.
+#
+# NOTE: save_type overrides the BACKUP_ID scan.
+# Use it when your modded ROM has no BACKUP_ID or wrong one.
+
+# ===========================================================================
+# POKEMON ROM HACKS (FireRed base - BPRE)
+# Flash 128KB required. Use save_type = flash128
+# Applies to: Radical Red, Unbound, Gaia, Sors, Crystal Clear (GBA port), etc.
+# ===========================================================================
+
+game_name = POKEMON FIRE
+game_code = BPRE
+vender_code = 01
+save_type = flash128
+# idle_loop found at 0x080008A2 (VBlank wait BEQ) and 0x080008B2 (busy-wait BEQ)
+# NOTE: 0x080008C6 from original gpSP-Kai config is NOP in the patched ROM
+idle_loop_eliminate_target = 080008A2
+idle_loop_eliminate_target = 080008B2
+
+# ===========================================================================
+# POKEMON ROM HACKS (Emerald base - BPEE)
+# Flash 128KB required.
+# Applies to: Rogue, Inclement Emerald, Altered Emerald, Kaizo Emerald, etc.
+# ===========================================================================
+
+game_name = POKEMON EMER
+game_code = BPEE
+vender_code = 01
+save_type = flash128
+
+# ===========================================================================
+# POKEMON ROM HACKS (Ruby base - AXVE)
+# Flash 128KB required.
+# ===========================================================================
+
+game_name = POKEMON RUBY
+game_code = AXVE
+vender_code = 01
+save_type = flash128
+
+# ===========================================================================
+# POKEMON ROM HACKS (Sapphire base - AXPE)
+# Flash 128KB required.
+# ===========================================================================
+
+game_name = POKEMON SAPP
+game_code = AXPE
+vender_code = 01
+save_type = flash128
+
+# ===========================================================================
+# POKEMON ROM HACKS (LeafGreen base - BPGE)
+# Flash 128KB required.
+# ===========================================================================
+
+game_name = POKEMON LEAF
+game_code = BPGE
+vender_code = 01
+save_type = flash128
+
+# ===========================================================================
+# CUSTOM GAME ENTRY TEMPLATE
+# Copy and fill this in for your specific modded game.
+# ===========================================================================
+
+# game_name = YOURGAMETITL
+# game_code = ABCD
+# vender_code = 01
+# save_type = flash128
+# iwram_stack_optimize = no

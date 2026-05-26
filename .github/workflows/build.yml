@@ -1,0 +1,38 @@
+name: Build TempGBA
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show toolchain version
+        run: |
+          docker run --rm pspdev/pspdev:latest sh -c "psp-gcc --version | head -1; psp-config --pspsdk-path"
+
+      - name: Build with pspdev toolchain
+        run: |
+          docker run --rm -v "${{ github.workspace }}:/work" \
+            -w /work/source \
+            pspdev/pspdev:latest \
+            sh -c "make clean; make 2>&1"
+
+      - name: List build output
+        if: always()
+        run: ls -la source/ || true
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: TempGBA-build
+          path: |
+            source/EBOOT.PBP
+            source/TempGBA.prx
+            source/TempGBA.elf
+          if-no-files-found: warn

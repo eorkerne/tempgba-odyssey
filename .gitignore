@@ -1,0 +1,16 @@
+# Build artifacts
+*.o
+*.elf
+*.sfo
+PARAM.SFO
+EBOOT.PBP
+TempGBA.prx
+source/*.o
+source/*.elf
+source/PARAM.SFO
+source/EBOOT.PBP
+source/TempGBA.prx
+
+# Dumps
+readonly_code_cache.bin
+writable_code_cache.bin

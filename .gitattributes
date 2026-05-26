@@ -1,0 +1,4 @@
+# Preserve bytes exactly as on disk. The source contains Shift-JIS encoded
+# Japanese comments whose multibyte sequences can include 0x0D/0x0A bytes;
+# any EOL normalization by git would corrupt them. Files are already LF.
+* -text
