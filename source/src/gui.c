@@ -301,6 +301,20 @@ void _flush_cache(void)
   invalidate_all_cache();
 }
 
+/* GCC nested-function trampolines (used by the menu option tables) are
+ * written onto the stack and must be made visible to the instruction cache.
+ * Modern GCC calls __clear_cache() for this; older versions called
+ * _flush_cache (above). Without it the freshly written trampoline is fetched
+ * as stale garbage -> bus error (instr) when the menu calls action_function.
+ * invalidate_all_cache() writes back the D-cache and invalidates the I-cache. */
+void __clear_cache(void *begin, void *end);
+void __clear_cache(void *begin, void *end)
+{
+  (void)begin;
+  (void)end;
+  invalidate_all_cache();
+}
+
 
 static int sort_function(const void *dest_str_ptr, const void *src_str_ptr)
 {
