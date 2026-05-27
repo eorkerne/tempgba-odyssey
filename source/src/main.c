@@ -551,9 +551,10 @@ static void synchronize(void)
     // "F:" climbs fast during battles == translation-cache thrashing.
     {
       extern u32 dynarec_flush_count;
-      char print_buffer[32];
-      sprintf(print_buffer, "%02d(%02d) F:%u", (int)fps, (int)frames_drawn,
-              (unsigned)dynarec_flush_count);
+      extern int scePowerGetCpuClockFrequency(void);
+      char print_buffer[40];
+      sprintf(print_buffer, "%02d(%02d) F:%u C:%d", (int)fps, (int)frames_drawn,
+              (unsigned)dynarec_flush_count, scePowerGetCpuClockFrequency());
       print_string(print_buffer, 0, 0, COLOR15_WHITE, COLOR15_BLACK);
     }
   }
