@@ -547,12 +547,13 @@ static void synchronize(void)
     if (get_pad_input(PSP_CTRL_HOLD) != 0)
       print_string(FONT_KEY_ICON, 6, 258, COLOR15_YELLOW, BG_NO_FILL);
 
-    // fps
-    if (psp_fps_debug != 0)
+    // fps + dynarec full-cache flush counter (DIAGNOSTIC build: always shown)
+    // "F:" climbs fast during battles == translation-cache thrashing.
     {
-      char print_buffer[16];
-      sprintf(print_buffer, "%02d(%02d)", fps, frames_drawn);
-//    sprintf(print_buffer, "%02d(%02d)", fps % 100, frames_drawn);
+      extern u32 dynarec_flush_count;
+      char print_buffer[32];
+      sprintf(print_buffer, "%02d(%02d) F:%u", (int)fps, (int)frames_drawn,
+              (unsigned)dynarec_flush_count);
       print_string(print_buffer, 0, 0, COLOR15_WHITE, COLOR15_BLACK);
     }
   }

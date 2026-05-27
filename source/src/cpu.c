@@ -142,6 +142,10 @@ u8 *readonly_next_code = readonly_code_cache;
 u8 ALIGN_DATA writable_code_cache[WRITABLE_CODE_CACHE_SIZE];
 u8 *writable_next_code = writable_code_cache;
 
+/* Diagnostic: counts full translation-cache flushes (expensive re-translations).
+ * Displayed on the FPS overlay to detect dynarec thrashing during battles. */
+u32 dynarec_flush_count = 0;
+
 /* These represent Metadata Areas. */
 u32 *rom_branch_hash[ROM_BRANCH_HASH_SIZE];
 ReuseHeader *writable_checksum_hash[WRITABLE_HASH_SIZE];
@@ -3877,6 +3881,9 @@ void clear_metadata_area(METADATA_AREA_TYPE metadata_area, METADATA_CLEAR_REASON
 
 void flush_translation_cache(TRANSLATION_REGION_TYPE translation_region, CACHE_FLUSH_REASON_TYPE flush_reason)
 {
+  if (flush_reason == FLUSH_REASON_FULL_CACHE)
+    dynarec_flush_count++;
+
   switch (translation_region)
   {
     case TRANSLATION_REGION_READONLY:
