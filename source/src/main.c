@@ -1046,6 +1046,11 @@ int set_cpu_clock(u32 psp_clock)
 {
   int ret = -1;
 
+  /* OC mode: do NOT touch the clock. The kernel API clamps to 333 anyway, and
+   * by setting it ourselves we were overriding the OC plugin's global ~443 MHz.
+   * Returning early lets TempGBA inherit whatever clock the plugin set. */
+  return 0;
+
   if (__scePowerSetClockFrequency != NULL)
   {
     switch (psp_clock)
