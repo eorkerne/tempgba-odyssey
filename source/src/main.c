@@ -1050,7 +1050,11 @@ int set_cpu_clock(u32 psp_clock)
     switch (psp_clock)
     {
       case PSP_CLOCK_333:
-        ret = (*__scePowerSetClockFrequency)(333, 333, 166);
+        /* Overclock: requires an OC plugin that unlocks scePowerSetClockFrequency
+         * above 333. The user's PSP-3004 is confirmed stable at ~443-444 MHz.
+         * 444/333 = +33% CPU -> targets the battle-engine throughput wall.
+         * If the API rejects >333 (no OC plugin), it stays at the requested cap. */
+        ret = (*__scePowerSetClockFrequency)(444, 444, 222);
         break;
 
       case PSP_CLOCK_300:
